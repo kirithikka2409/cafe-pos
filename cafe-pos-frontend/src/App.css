@@ -1,0 +1,146 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  transition: 0.3s;
+  padding: 20px;
+}
+
+.login-container.dark {
+  background: linear-gradient(135deg, #232526, #414345);
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.login-container.dark .login-card {
+  background: #2b2b2b;
+  color: white;
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.theme-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.login-container.dark input {
+  background: #444;
+  border: 1px solid #555;
+  color: white;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #6f4e37;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-card button:hover {
+  background: #5a3c2a;
+}
+
+.remember-row {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Spinner */
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #6f4e37;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .login-card {
+    padding: 25px;
+  }
+}

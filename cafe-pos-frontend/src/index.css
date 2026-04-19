@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f1eb;
+}
+
+h2 {
+  color: #6f4e37;
+}
+
+button {
+  cursor: pointer;
+  transition: 0.3s ease;
+}

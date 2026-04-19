@@ -1,0 +1,190 @@
+/* --- Global --- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- Dark Mode Cards --- */
+.menu-card.dark {
+  background: rgba(62, 39, 35, 0.85);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Menu Card --- */
+.menu-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+  position: relative;
+}
+
+/* Hover effect for card */
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Images */
+.menu-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Image hover zoom */
+.menu-card img.hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Card fade-in animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Food type dot */
+.food-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.food-dot:hover {
+  transform: scale(1.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #3e2723;
+  color: white;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed { width: 70px; }
+
+.sidebar p {
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+
+.sidebar p.active { font-weight: bold; }
+
+.sidebar-item:hover { background-color: #6f4e37; }
+
+.collapse-btn { margin-top: 20px; }
+
+/* Dashboard Cards */
+.dashboard-card {
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Summary cards */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.summary-cards > div {
+  flex: 1;
+  min-width: 150px;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  background: #6f4e37;
+}
+
+/* Add item form */
+.add-item {
+  margin-bottom: 40px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Categories and Food Types */
+.categories, .food-types {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.categories button, .food-types button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.categories button:hover, .food-types button:hover {
+  background-color: #a97c5c;
+  color: white;
+}
+
+.categories .active-tab, .food-types .active-tab {
+  background: #6f4e37;
+  color: white;
+}
+
+/* Menu Grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .menu-card { min-width: 200px; }
+  .dashboard-card { flex: 1 1 45%; }
+}
+
+@media (max-width: 768px) {
+  body { font-size: 14px; }
+  .menu-card { min-width: 150px; }
+  .dashboard-card { flex: 1 1 100%; }
+  .menu-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .sidebar { display: none; }
+}
+
+/* Global layout */
+.menu-admin { display: flex; min-height: 100vh; background: linear-gradient(135deg, #f3e5d5, #d9a07b); transition: background 0.3s; }
+.dark-mode { background: #121212; color: #fff; }
+.main-content { flex: 1; padding: 40px; }
+.header { display: flex; justify-content: space-between; margin-bottom: 30px; }
