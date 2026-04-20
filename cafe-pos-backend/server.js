@@ -11,6 +11,8 @@ const orderRoutes = require("./routes/orderRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes"); // ✅ note the .js is optional
 const kotRoutes = require("./routes/kotRoutes");
 const checkLicense = require("./middleware/checkLicense");
+const User = require("./models/User");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -32,7 +34,43 @@ app.use("/api/dashboard", checkLicense, dashboardRoutes); // ✅ this is correct
 app.use("/api/kot", checkLicense, kotRoutes);
 // Start server
 const PORT = process.env.PORT || 8080;
-sequelize.sync({ alter:false }).then(() => {
-  console.log("DB synced");
-  app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+
+const bcrypt = require("bcryptjs");
+
+async function createDefaultAdmin() {
+  try {
+    const admin = await User.findOne({ where: { username: "admin" } });
+
+    if (!admin) {
+      const hashedPassword = await bcrypt.hash("admin123", 10);
+
+      await User.create({
+        name: "Admin",
+        username: "admin",
+        password: hashedPassword,
+        role: "admin",
+      });
+
+      console.log("✅ Default admin created (admin / admin123)");
+    } else {
+      console.log("ℹ️ Admin already exists");
+    }
+  } catch (err) {
+    console.error("❌ Admin creation error:", err);
+  }
+}
+
+sequelize.sync({ alter: false }).then(async () => {
+  try {
+    console.log("DB synced");
+
+    await createDefaultAdmin();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on ${PORT}`);
+    });
+
+  } catch (err) {
+    console.error("Startup error:", err);
+  }
 });
