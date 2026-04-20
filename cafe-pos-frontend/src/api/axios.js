@@ -3,9 +3,10 @@ import { logoutUser } from "../utils/auth";
 import { getDeviceId } from "../utils/device";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL + "/api",
+  baseURL: process.env.REACT_APP_API_URL
+    ? `${process.env.REACT_APP_API_URL}/api`
+    : "http://localhost:8080/api",
 });
-
 // -------------------- REQUEST INTERCEPTOR --------------------
 api.interceptors.request.use(
   (config) => {
@@ -39,13 +40,14 @@ api.interceptors.response.use(
 
     // 🔑 LICENSE HANDLING (SAFE & CLEAN)
     if (
-      message === "License not activated" ||
-      message === "License expired" ||
-      message === "This device is not authorized"
-    ) {
-      window.location.href = "/activate-license";
-      return Promise.reject(error);
-    }
+  message === "License not activated" ||
+  message === "License expired" ||
+  message === "This device is not authorized"
+) {
+  localStorage.removeItem("token");
+  window.location.replace("/activate-license");
+  return Promise.reject(error);
+}
 
     return Promise.reject(error);
   }
