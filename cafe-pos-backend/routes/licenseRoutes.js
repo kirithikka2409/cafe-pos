@@ -1,60 +1,49 @@
 const express = require("express");
 const router = express.Router();
-
-const License = require("../models/License"); // ✅ FIXED IMPORT
-
+const License = require("../models/License");
 const {
   createLicense,
   activateLicense,
   validateLicense
 } = require("../controllers/licenseController");
 
-// Create license
+// CREATE
 router.post("/create", createLicense);
 
-// Activate license
+// ACTIVATE
 router.post("/activate", activateLicense);
 
-// Validate license
+// VALIDATE
 router.get("/validate", validateLicense);
 
-// Get license status (frontend startup check)
+// ✅ STATUS (FIXED)
 router.get("/status", async (req, res) => {
   try {
     const license = await License.findOne({
       where: { isActivated: true },
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "DESC"]]
     });
 
     if (!license) {
-      return res.json({
-        valid: false,
-        message: "NO_LICENSE"
-      });
+      return res.json({ valid: false, message: "NO_LICENSE" });
     }
 
-    const isExpired =
+    const expired =
       license.expiryDate &&
       new Date() > new Date(license.expiryDate);
 
-    if (isExpired) {
-      return res.json({
-        valid: false,
-        message: "EXPIRED"
-      });
+    if (expired) {
+      return res.json({ valid: false, message: "EXPIRED" });
     }
 
     return res.json({
       valid: true,
       message: "ACTIVE",
-      license: {
-        clientName: license.clientName,
-        expiryDate: license.expiryDate
-      }
+      license
     });
 
   } catch (err) {
-    console.error("License status error:", err);
+    console.error(err);
     return res.status(500).json({
       valid: false,
       message: "SERVER_ERROR"

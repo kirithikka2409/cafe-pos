@@ -30,24 +30,40 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     const message = error.response?.data?.message;
+    const code = error.response?.data?.code;
 
-    // ❌ Login/session expired
     if (status === 401) {
       logoutUser();
       window.location.href = "/login";
       return Promise.reject(error);
     }
 
-    // 🔑 LICENSE HANDLING (SAFE & CLEAN)
-    if (
+    const isLicenseError =
+      code === "LICENSE_NOT_ACTIVATED" ||
+      code === "LICENSE_EXPIRED" ||
+      message === "License not activated" ||
+      message === "License expired";
+
+    if (isLicenseError) {
+      const current = window.location.pathname;
+
+      // 🚨 STOP LOOP
+      if (current !== "/activate-license") {
+        localStorage.removeItem("token");
+        // only mark error, DO NOT redirect
+if (
   message === "License not activated" ||
   message === "License expired" ||
   message === "This device is not authorized"
 ) {
-  localStorage.removeItem("token");
-  window.location.replace("/activate-license");
-  return Promise.reject(error);
+  localStorage.setItem("license_error", message);
 }
+
+return Promise.reject(error);
+      }
+
+      return Promise.reject(error);
+    }
 
     return Promise.reject(error);
   }

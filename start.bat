@@ -1,32 +1,29 @@
 @echo off
-title Cafe POS System
+title CAFE POS STARTER
 
 echo =====================================
-echo        STARTING CAFE POS
+echo    STARTING CAFE POS SYSTEM
 echo =====================================
 
-cd /d %~dp0
+:: BACKEND
+echo Starting Backend...
+start "Cafe POS Backend" cmd /k "cd cafe-pos-backend && npm start"
 
-echo.
-echo Starting Backend Server...
-cd cafe-pos-backend
-start cmd /k "npm start"
+timeout /t 3 > nul
 
-echo.
+:: FRONTEND (STOP AUTO OPEN)
 echo Starting Frontend...
-cd ../cafe-pos-frontend
-start cmd /k "npm start"
+start "Cafe POS Frontend" cmd /k "cd cafe-pos-frontend && set BROWSER=none && npm start"
 
-echo.
 echo Waiting for services...
-timeout /t 5 >nul
+timeout /t 10 > nul
 
-echo Opening POS in browser...
-start http://localhost:3000
+:: OPEN ONLY ONE URL
+echo Opening POS System...
+start http://localhost:3030
 
-echo.
 echo =====================================
-echo     CAFE POS IS RUNNING
+echo   SYSTEM RUNNING SUCCESSFULLY
 echo =====================================
 
 pause
