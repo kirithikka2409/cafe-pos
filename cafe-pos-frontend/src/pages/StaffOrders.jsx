@@ -9,7 +9,6 @@ export default function StaffOrders() {
 
   const navigate = useNavigate();
   const previousOrdersRef = useRef([]);
-  const audioRef = useRef(null);
 
   console.log("Render orders", orders);
 

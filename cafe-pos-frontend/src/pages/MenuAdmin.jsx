@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import api from "../api/axios";
 import "./MenuAdmin.css";
-import { useNavigate } from "react-router-dom";
 import AdminLayout from "../components/AdminLayout";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -11,7 +10,6 @@ export default function MenuAdmin() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeFoodType, setActiveFoodType] = useState("All");
   const fileInputRef = useRef(null);
-  const navigate = useNavigate();
 
   // Animated totals
   const [displaySubtotal, setDisplaySubtotal] = useState(0);
@@ -127,11 +125,12 @@ export default function MenuAdmin() {
     requestAnimationFrame(step);
   };
 
-  useEffect(() => {
-    animateNumber(displaySubtotal, subtotal, setDisplaySubtotal);
-    animateNumber(displayDiscount, discountPercent, setDisplayDiscount);
-    animateNumber(displayTotal, totalAmount, setDisplayTotal);
-  }, [subtotal, discountPercent, totalAmount]);
+useEffect(() => {
+  animateNumber(displaySubtotal, subtotal, setDisplaySubtotal);
+  animateNumber(displayDiscount, discountPercent, setDisplayDiscount);
+  animateNumber(displayTotal, totalAmount, setDisplayTotal);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [subtotal, discountPercent, totalAmount]);
 
   // --- Drag & Drop ---
   const handleDragEnd = (result) => {

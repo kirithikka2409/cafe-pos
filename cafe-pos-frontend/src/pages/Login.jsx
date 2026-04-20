@@ -63,23 +63,14 @@ useEffect(() => {
     const role = getUserRole();
     navigate(role === "admin" ? "/admin/menu" : "/menu");
   }
-}, []);
+}, [navigate]);
 
   return (
     <div className={`login-container ${darkMode ? "dark" : ""}`}>
       <div className="login-card">
 
         <div className="login-header">
-          <img
-      src="/logo.png"
-      alt="Logo"
-      style={{
-        width: 140,
-        height: "auto",
-        filter: "drop-shadow(0 3px 8px rgba(0,0,0,0.3))"
-      }}
-    />
-
+          <h2>☕ Café POS Login</h2>
           <button className="theme-btn" onClick={toggleTheme}>
             {darkMode ? "☀️" : "🌙"}
           </button>

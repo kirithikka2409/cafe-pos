@@ -8,7 +8,7 @@ export default function Menu() {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [paymentMethod] = useState("Cash");
   const [discount, setDiscount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [darkMode, setDarkMode] = useState(false);
@@ -123,11 +123,12 @@ export default function Menu() {
     requestAnimationFrame(step);
   };
 
-  useEffect(() => {
-    animateValue(displaySubtotal, subtotalExclVAT, setDisplaySubtotal);
-    animateValue(displayVAT, vatTotal, setDisplayVAT);
-    animateValue(displayTotal, totalAmount, setDisplayTotal);
-  }, [subtotalExclVAT, vatTotal, totalAmount]);
+useEffect(() => {
+  animateValue(displaySubtotal, subtotalExclVAT, setDisplaySubtotal);
+  animateValue(displayVAT, vatTotal, setDisplayVAT);
+  animateValue(displayTotal, totalAmount, setDisplayTotal);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [subtotalExclVAT, vatTotal, totalAmount]);
 
   const placeOrder = async () => {
     if (role !== "counter") return alert("❌ Only counter users can place orders");
