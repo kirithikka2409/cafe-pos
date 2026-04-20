@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
 const License = sequelize.define("License", {
@@ -6,36 +6,33 @@ const License = sequelize.define("License", {
     type: DataTypes.STRING,
     allowNull: false
   },
+
   licenseKey: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: false
   },
-    days: { 
-        type: DataTypes.INTEGER 
-    },
+
+  days: {
+    type: DataTypes.INTEGER,
+    defaultValue: 30
+  },
+
   expiryDate: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  activatedAt: { 
-    type: DataTypes.DATE, allowNull: true 
-},
-isActivated: { 
-    type: DataTypes.BOOLEAN, defaultValue: false 
 
-},
+  activatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
 
-  isActive: {
+  isActivated: {
     type: DataTypes.BOOLEAN,
-    defaultValue: true
+    defaultValue: false
   }
-}, 
-
-{
+}, {
   timestamps: true
 });
 

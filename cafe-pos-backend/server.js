@@ -13,6 +13,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const kotRoutes = require("./routes/kotRoutes");
 const checkLicense = require("./middleware/checkLicense");
+const License = require("./models/License");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -72,12 +73,32 @@ async function createDefaultAdmin() {
       throw new Error("❌ INSTALL MODE BLOCKED IN PRODUCTION");
     }
 
-    await sequelize.sync({ force: FORCE_RESET });
+    await sequelize.sync({ force: FORCE_RESET && process.env.INSTALL_MODE === "true" });
 
     if (FORCE_RESET) {
       console.log("⚠️ INSTALL MODE: DATABASE RESET DONE");
     }
 
+
+const license = await License.findOne({
+  where: { isActivated: true },
+  order: [["createdAt", "DESC"]],
+  limit: 1
+});
+
+if (!license && process.env.INSTALL_MODE !== "true") {
+  console.log("❌ NO LICENSE FOUND - SYSTEM BLOCKED");
+  process.exit(1);
+}
+
+// EXPIRY CHECK (IMPORTANT)
+if ( license && license.expiryDate) {
+ if( new Date() > new Date(license.expiryDate)) {
+
+  console.log("❌ LICENSE EXPIRED - SYSTEM BLOCKED");
+  process.exit(1);
+}
+}
     await createDefaultAdmin();
 
     app.listen(PORT, () => {
