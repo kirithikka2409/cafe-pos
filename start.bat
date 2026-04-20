@@ -5,9 +5,11 @@ echo =====================================
 echo        STARTING CAFE POS
 echo =====================================
 
+cd /d %~dp0
+
 echo.
 echo Starting Backend Server...
-cd backend
+cd cafe-pos-backend
 start cmd /k "npm start"
 
 echo.
@@ -16,7 +18,7 @@ cd ../cafe-pos-frontend
 start cmd /k "npm start"
 
 echo.
-echo Waiting for services to start...
+echo Waiting for services...
 timeout /t 5 >nul
 
 echo Opening POS in browser...
